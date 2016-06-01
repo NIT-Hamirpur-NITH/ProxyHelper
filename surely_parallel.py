@@ -1,4 +1,4 @@
-#!/usr/bin/env/python3
+#!/usr/bin/python3
 
 proxies = ['google.com','bing.com','wikipedia.com','172.16.24.2',
            '172.16.24.3','172.16.24.4','172.16.12.2','172.16.12.3',
