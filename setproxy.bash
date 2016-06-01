@@ -52,14 +52,22 @@ proxy_apt()
 	mv ./.temp_file_apt /etc/apt/apt.conf
 }
 
-PROXY_OP=$(python3 surely_parallel.py | tail -1)
-echo THE OP IS $PROXY_OP
-key=$(echo $PROXY_OP | sed 's/Proxy : .*/Proxy/')
-echo THE KEY IS $key
-
-if [[ $key = 'Proxy' ]]
+if [[ ! $1 = "None" ]]
 then
-    WIFI_PROXY=$(echo $PROXY_OP | sed 's/Proxy : \(.*\)/\1/')
-else
-    WIFI_PROXY=None 
+    PROXY_OP=$(python3 surely_parallel.py | tail -1)
+    echo THE OP IS $PROXY_OP
+    key=$(echo $PROXY_OP | sed 's/Proxy : .*/Proxy/')
+    echo THE KEY IS $key
 
+    if [[ $key = 'Proxy' ]]
+    then
+        WIFI_PROXY=$(echo $PROXY_OP | sed 's/Proxy : \(.*\)/\1/')
+    else
+        WIFI_PROXY=None 
+    fi
+else
+    WIFI_PROXY=None
+fi
+
+proxy_env
+proxy_apt
