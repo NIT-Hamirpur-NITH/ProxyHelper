@@ -8,6 +8,7 @@ then
 fi
 
 chmod +x ./zetproxy
-mv ./zetproxy /etc/network/if-up.d
-mv ./surely_parallel.py /etc/network/if-up.d
+cp ./zetproxy /etc/network/if-up.d
+cp ./surely_parallel.py /etc/network/if-up.d
 
+echo Installation complete
