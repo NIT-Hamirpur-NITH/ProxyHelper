@@ -1,4 +1,9 @@
 #!/usr/bin/env/python3
+
+proxies = ['google.com','bing.com','wikipedia.com','172.16.24.2',
+           '172.16.24.3','172.16.24.4','172.16.12.2','172.16.12.3',
+           '172.16.20.2','None','reddit.com']
+
 import sys
 import subprocess
 import random
@@ -12,9 +17,6 @@ INFI = float('inf')
 logging.basicConfig(level=logging.DEBUG,
                     format='(%(threadName)-9s) %(message)s',)
 
-proxies = ['google.com','bing.com','wikipedia.com','172.16.24.2',
-           '172.16.24.3','172.16.24.4','172.16.12.2','172.16.12.3',
-           '172.16.20.2','None','reddit.com']
 pidi = {}
 
 class Pinger(object):

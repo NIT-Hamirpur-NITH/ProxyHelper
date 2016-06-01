@@ -4,22 +4,26 @@
 This repository will contain the code for a **cool** application that would remove the need to use FoxyProxy and likes.
 
 
-Sets proxy for system based on network with which it is connected.
+Pings multiple proxies in parallel and sets the fastest one for you!!
 
-You can specify all proxies associated with a given network and the script
-will choose the fastest between them and set it for the system.
-
-
-#### To add/edit a network
-```
-1) Go to proxy.dbase
-2) Add the network name
-3) Add single space after name
-4) Write all the possible proxies for network separated by space
-5) If no proxy write "None"
-```
 #### To run the script
 ```
-1) chmod +x setproxy.bash
-2) sudo ./setproxy.bash
+1) Clone the directory
+2) cd ProxyHelper
+3) chmod +x setproxy.bash
+4) sudo ./setproxy.bash
+```
+
+#### To reset the proxy ( Pass a **None** argument )
+```
+sudo ./setproxy.bash None
+```
+
+#### Mostly not required ( nor recommended )
+
+##### To edit the proxy pool
+```
+1) Open surely_parallel.py in your favorite text editor
+2) Look for the **proxies** list near the top
+3) Add/Remove proxy from the list 
 ```
