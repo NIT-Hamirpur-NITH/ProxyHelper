@@ -8,7 +8,7 @@ Pings multiple proxies in parallel and sets the fastest one for you!!
 
 ### INCOMPLETE AS OF NOW, DON'T INSTALL
 
-##### To install the script
+To install the script
 ```
 1) Clone the directory
 2) cd ProxyHelper
@@ -16,12 +16,12 @@ Pings multiple proxies in parallel and sets the fastest one for you!!
 4) sudo ./install.sh
 ```
 
-##### To reset the proxy ( Pass a **None** argument )
+To reset the proxy ( Pass a **None** argument )
 ```
 sudo ./zetproxy None
 ```
 
-## Mostly not required ( nor recommended )
+Mostly not required ( nor recommended )
 
 ##### To edit the proxy pool
 ```
