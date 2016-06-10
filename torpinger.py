@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/usr/bin/python3
 # Python 3 required !!
 # do 'pip3 install pysocks' for socks module
 
