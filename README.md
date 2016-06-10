@@ -6,20 +6,22 @@ This repository will contain the code for a **cool** application that would remo
 
 Pings multiple proxies in parallel and sets the fastest one for you!!
 
-#### To run the script
+### INCOMPLETE AS OF NOW, DON'T INSTALL
+
+##### To install the script
 ```
 1) Clone the directory
 2) cd ProxyHelper
-3) chmod +x setproxy.bash
-4) sudo ./setproxy.bash
+3) chmod +x install.sh
+4) sudo ./install.sh
 ```
 
-#### To reset the proxy ( Pass a **None** argument )
+##### To reset the proxy ( Pass a **None** argument )
 ```
-sudo ./setproxy.bash None
+sudo ./zetproxy None
 ```
 
-#### Mostly not required ( nor recommended )
+## Mostly not required ( nor recommended )
 
 ##### To edit the proxy pool
 ```
