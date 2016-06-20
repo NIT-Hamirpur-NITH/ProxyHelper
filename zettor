@@ -1,0 +1,5 @@
+#!/bin/bash
+echo 'Bash is working' >> /tmp/tortester
+op=$(sudo python3 /etc/network/if-up.d/torpinger.py)
+echo $op >> ~/it_is_working
+

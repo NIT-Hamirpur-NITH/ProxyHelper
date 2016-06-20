@@ -16,7 +16,6 @@ INFI = float('inf')
 
 logging.basicConfig(level=logging.DEBUG,
                     format='(%(threadName)-9s) %(message)s',)
-
 pidi = {}
 
 class Pinger(object):

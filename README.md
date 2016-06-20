@@ -8,7 +8,7 @@ Pings multiple proxies in parallel and sets the fastest one for you!!
 
 ### INCOMPLETE AS OF NOW, DON'T INSTALL
 
-To install the script
+If you insist... follow these steps to install 
 ```
 1) Clone the directory
 2) cd ProxyHelper
@@ -26,6 +26,6 @@ Mostly not required ( nor recommended )
 ##### To edit the proxy pool
 ```
 1) Open surely_parallel.py in your favorite text editor
-2) Look for the **proxies** list near the top
+2) Look for the *proxies* list near the top
 3) Add/Remove proxy from the list 
 ```
