@@ -71,7 +71,7 @@ class TorPinger(object):
         for SOCK in self.sockets:
             success = False
             ## Comment below later
-            print('Output of netstat: ', op.find(str(SOCK)))
+            # print(op.find(str(SOCK)))
             ## If socket is open
             if op.find(str(SOCK)) != -1:
                 SOCKS.append(SOCK) 
@@ -111,25 +111,6 @@ class TorPinger(object):
 tpinger = TorPinger()
 # tpinger.main_loop()
 tpinger.which_socks()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

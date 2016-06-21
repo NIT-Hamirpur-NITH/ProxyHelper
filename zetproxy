@@ -63,10 +63,14 @@ then
     else
         WIFI_PROXY=None 
     fi
-else
+    # Experimental Hack
+    echo 'Tor pinger executing'
+    op=$(python3 /etc/network/if-up.d/torpinger.py)
+    echo $op
+    WIFI_PROXY=$op
+    # Hack close
+    else
     WIFI_PROXY=None
 fi
-
-WIFI_PROXY='Hell'
 proxy_env
 proxy_apt
