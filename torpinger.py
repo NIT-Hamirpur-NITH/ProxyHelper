@@ -36,13 +36,13 @@ class TorPinger(object):
         self.ping_url = 'http://www.msftncsi.com/ncsi.txt'
         ## time between two pings
         ## should be 30seconds ??
-        self.interval = 30
+        self.interval = 1
         ## timeout for one ping
         ## should be 5 seconds ??
-        self.timeout = 5
+        self.timeout = 10
         ## If program doesn't find any active tor connection within these seconds, it
         ## will stop its operation and exit
-        self.timeout_for_socks = 3
+        self.timeout_for_socks = 1
         ## time it will wait to check if there is some update or note, no need to modify
         self.timeout_one_check = 1
 
@@ -52,15 +52,25 @@ class TorPinger(object):
         self.sockets = dict(zip(possible_sockets,priority))
     
     def set_socket(self,SOCKS5_PROXY_PORT):
+        """ Set socks proxy for socket
+        """
         SOCKS5_PROXY_HOST = '127.0.0.1'
         socks.setdefaultproxy(proxy_type=socks.PROXY_TYPE_SOCKS5,addr=SOCKS5_PROXY_HOST,port=SOCKS5_PROXY_PORT)
         socket.socket = socks.socksocket
 
     def ping_socket(self,url):
+        ## below is only for testing
+        with open('/tmp/yeahbro','a') as f:
+            f.write(url)
         ## function to send GET to url
+        ## !Important 
+        ## If tor is not yet network is proxy driven it will not give error and 
+        ## quit but instead it will be excepted, this is a hack that will allow 
+        ## it to run even when when tor is not connected 
         try:
             resp = urlopen(url,timeout=self.timeout)
-            print(resp.read().decode()[0:4])
+            # print(resp.read().decode()[0:4])
+            print(resp.read())
             resp.close()
         except OSError:
             print('Time out')
@@ -105,9 +115,9 @@ class TorPinger(object):
         self.set_socket(self.SOCK_REAL)
         ## and ping the socket
 
-        # while True:
-        self.ping_socket(self.ping_url)
-        # time.sleep(self.interval)
+        while True:
+            self.ping_socket(self.ping_url)
+            time.sleep(self.interval)
 
 if __name__=='__main__':
     tpinger = TorPinger()
