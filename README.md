@@ -9,16 +9,27 @@ Whether you are in AGH or CC or KBH, or your proxy is ```172.16.12.2``` or ```17
 Another cool thing about ProxyHelper is that it always sets the *Fastest* proxy for you. This is especially relevant if you use networks in CC or EED and you don't know which proxy will be faster -```172.16.24.2``` or ```172.16.24.3```; leave it to ProxyHelper to test both proxies and set the faster proxy automatically.
   
 Also, did I mention with ProxyHelper you can use internet with *tor* even after 2 A.M limit?(potentially to the next day!).   
-Yes ProxyHelper can do it and has many more intereting feature which are discussed below. (see **More Features**)  
- 
-**Currently in Alpha, feel free to test it and report issues and bugs here.**  
+Yes ProxyHelper can do it and has many more intereting feature which are discussed below. (see *More Features*)  
+   
+   
+   
+**Currently in Alpha, feel free to test it and report issues and bugs here. However, it is not tested for various platforms (except Kubuntu), so if you don't know how to fix a broken linux, don't install, wait for it to become stable.**  
   
   
   
 ===
 ###Installation
-
-```
+  
+  
+  
+**Requirements:-**
+* Linux    (ProxyHelper doesn't support for windows, yet.)  
+* 
+* git  
+* If you don't have it, install with following steps:-
+> sudo apt-get install git
+1) Clone the repository 
+>git clone https://github.com/Nithmr/ProxyHelper
 1) Clone the directory
 2) cd ProxyHelper
 3) chmod +x install.sh
