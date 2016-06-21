@@ -8,9 +8,8 @@ then
 fi
 
 rm /etc/network/if-up.d/surely_parallel.py
-rm /etc/network/if-up.d/torpinger.py
+rm /etc/network/if-up.d/torpinger
 rm /etc/network/if-up.d/zetproxy
-rm /etc/network/if-up.d/zettor
 
 
 echo Uninstallation complete

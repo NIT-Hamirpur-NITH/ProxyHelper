@@ -8,10 +8,12 @@ then
 fi
 
 # parallel pinger and setter
- chmod +x ./zetproxy
- cp ./zetproxy /etc/network/if-up.d
+chmod +x ./zetproxy
+chmod +x ./torpinger
+cp ./zetproxy /etc/network/if-up.d
 cp ./surely_parallel.py /etc/network/if-up.d
-cp ./torpinger.py /etc/network/if-up.d/
+cp ./torpinger /etc/network/if-up.d/
+
 # chmod +x ./zettor
 # cp ./zettor /etc/network/if-up.d/
 echo Installation complete

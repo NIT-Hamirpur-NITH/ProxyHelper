@@ -68,7 +68,3 @@ else
 fi
 proxy_env
 proxy_apt
-# Experimental Hack
-echo 'Tor pinger executing'
-python3 /etc/network/if-up.d/torpinger.py 
-# Hack close
