@@ -3,10 +3,9 @@
 [![Join the chat at https://gitter.im/Nithmr/ProxyHelper](https://badges.gitter.im/Nithmr/ProxyHelper.svg)](https://gitter.im/Nithmr/ProxyHelper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 This repository will contain the code for a **cool** application that would remove the need to use FoxyProxy and likes.
 
-Parallel pinging, auto-proxy set, pinging throuh
-Pings multiple proxies in parallel and sets the fastest one for you!!
+Parallel pinging, automatic proxy set in *environment file*, automatic proxy set for *apt* ,ping-esque operation through tor, routine wake-up calls on tor network and other cool features. 
 
-###  CURRENTLY IN ALPHA. FEEL FREE TO TRY IT AND REPORT ISSUES HERE :)
+#####  CURRENTLY IN ALPHA. FEEL FREE TO TRY IT AND REPORT ISSUES HERE :)
 
 ####Installing is easy (Requires - linux, git)
 ```
