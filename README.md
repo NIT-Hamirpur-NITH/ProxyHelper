@@ -55,7 +55,7 @@ The below are required only if you want to use **tor** related utilities:-
 ###How to know if ProxyHelper is working?   
   
 1. Check the content of /tmp/torpingtest in interval of some time, if some lines are being added to the file automatically, then voila! your torpinging is working perfectly fine  
-```cat /tmp/torpingtest.```
+```cat /tmp/torpingtest```
 2. Check the content of your /etc/environment file, the best proxy for your network should be automatically set there.  
 ```cat /etc/environment```
 
