@@ -15,20 +15,24 @@ Yes ProxyHelper can do it and has many more intereting feature which are discuss
    
 **Currently in Alpha, feel free to test it and report issues and bugs here. However, it is not tested for various platforms (except Kubuntu), so if you don't know how to fix a broken linux, don't install, wait for it to become stable.**  
   
+===
+
+###Requirements:-
   
+1. **Linux**  -  ProxyHelper doesn't support for windows unfortunately (Yet)  
+2. **Git**  -  You need to have git installed in your system   
+```sudo apt-get install git```  
+3. **Python3**  -  In Ubuntu based distributions since 14.04 it is already installed, otherwise you need to install this by yourself.   
+
+The below are required only if you want to use **tor** related utilities:-
   
+4. **pip-3**  -  Again, this should come already installed with your OS, otherwise follow the step below.  
+```sudo apt-get install python3-pip```
+5. **socks python module**   
+```sudo -H pip3 install pysocks```
+
 ===
 ###Installation
-  
-  
-  
-**Requirements:-**
-* Linux    (ProxyHelper doesn't support for windows, yet.)  
-* 
-* git  
-* If you don't have it, install with following steps:-
-> sudo apt-get install git
-1) Clone the repository 
 >git clone https://github.com/Nithmr/ProxyHelper
 1) Clone the directory
 2) cd ProxyHelper
