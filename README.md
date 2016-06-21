@@ -17,6 +17,12 @@ Yes ProxyHelper can do it and has many more intereting feature which are discuss
   
 ===
 
+###More Features
+  
+This section is yet to be written. It will contain an in-depth description of the components of ProxyHelper  
+
+===
+
 ###Requirements:-
   
 1. **Linux**  -  ProxyHelper doesn't support for windows unfortunately (Yet)  
@@ -32,26 +38,41 @@ The below are required only if you want to use **tor** related utilities:-
 ```sudo -H pip3 install pysocks```
 
 ===
-###Installation
->git clone https://github.com/Nithmr/ProxyHelper
-1) Clone the directory
-2) cd ProxyHelper
-3) chmod +x install.sh
-4) sudo ./install.sh
-```
-###How to know if it's working?
+
+###Installation  
+1. Clone the repository to your machine  
+```git clone https://github.com/Nithmr/ProxyHelper```
+2. Move to the directory  
+```cd ProxyHelper```
+3. Make the installer script executable  
+```chmod +x install.sh```  
+4. Run the installer script  
+```sudo ./install.sh```
+    
+===
 
 
-To reset the proxy ( Pass a **None** argument )
-```
-sudo ./zetproxy None
-```
+###How to know if ProxyHelper is working?   
+  
+1. Check the content of /tmp/torpingtest in interval of some time, if some lines are being added to the file automatically, then voila! your torpinging is working perfectly fine  
+```cat /tmp/torpingtest.```
+2. Check the content of your /etc/environment file, the best proxy for your network should be automatically set there.  
+```cat /etc/environment```
 
-Mostly not required ( nor recommended )
+===
 
-##### To edit the proxy pool
-```
-1) Open surely_parallel.py in your favorite text editor
-2) Look for the *proxies* list near the top
-3) Add/Remove proxy from the list 
-```
+
+###Uninstallation
+  
+1. Go to the directory where you cloned ProxyHelper  
+2. Run the uninstallation script  
+```sudo ./uninstall.sh```
+   
+===
+
+###To reset the proxy  
+1. Go to the directory where you cloned ProxyHelper  
+2. Type the line below in the shell  
+```sudo ./zetproxy None```
+
+===
