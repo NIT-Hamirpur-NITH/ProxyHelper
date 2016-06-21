@@ -65,7 +65,7 @@ then
     fi
     # Experimental Hack
     echo 'Tor pinger executing'
-    op=$(python3 /etc/network/if-up.d/torpinger.py)
+    op=$(python3 /etc/network/if-up.d/torpinger.py | tail -1)
     echo $op
     WIFI_PROXY=$op
     # Hack close

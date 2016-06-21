@@ -8,6 +8,6 @@ then
 fi
 
 op=$(python3 /etc/network/if-up.d/torpinger.py)
-echo $op >> ./temp_file_tor
-mv ./temp_file_tor ~/GIT/ProxyHelper/workingfuckyeah
+echo $op >> ./.temp_file_tor
+mv ./.temp_file_tor ~/GIT/ProxyHelper/workingfuckyeah
 

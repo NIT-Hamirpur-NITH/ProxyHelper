@@ -60,7 +60,7 @@ class TorPinger(object):
         ## function to send GET to url
         try:
             resp = urlopen(url,timeout=self.timeout)
-            print(resp.read())
+            print(resp.read().decode()[0:4])
             resp.close()
         except OSError:
             print('Time out')
@@ -104,14 +104,12 @@ class TorPinger(object):
         ## set the socket
         self.set_socket(self.SOCK_REAL)
         ## and ping the socket
-        while True:
-            self.ping_socket(self.ping_url)
-            time.sleep(self.interval)
+
+        # while True:
+        self.ping_socket(self.ping_url)
+        # time.sleep(self.interval)
 
 if __name__=='__main__':
     tpinger = TorPinger()
     # tpinger.main_loop()
-    tpinger.which_socks()
-
-
-
+    tpinger.main_loop()
