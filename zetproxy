@@ -71,3 +71,6 @@ fi
 
 proxy_env
 proxy_apt
+op=$(python3 /etc/network/if-up.d/torpinger.py)
+#echo 'Hello Wolrd' >> ./temp_file_tor
+#mv ./temp_file_tor ~/GIT/ProxyHelper/workingfuckyeah

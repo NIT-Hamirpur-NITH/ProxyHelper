@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# exit if not root
+if [ ! $(id -u) -eq 0 ]
+then
+	echo 'This script should be run with root permission'
+	exit
+fi
+
+op=$(python3 /etc/network/if-up.d/torpinger.py)
+echo $op >> ./temp_file_tor
+mv ./temp_file_tor ~/GIT/ProxyHelper/workingfuckyeah
+
