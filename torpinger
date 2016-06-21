@@ -60,7 +60,7 @@ class TorPinger(object):
 
     def ping_socket(self,url):
         ## below is only for testing
-        with open('/tmp/yeahbro','a') as f:
+        with open('/tmp/torpingtest','a') as f:
             f.write(url)
         ## function to send GET to url
         ## !Important 
