@@ -1,2 +1,0 @@
-echo 'Bash is working' >> /tmp/tortester
-python3 /etc/network/if-up.d/torpinger.py
