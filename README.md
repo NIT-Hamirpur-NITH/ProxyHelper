@@ -8,9 +8,7 @@ ProxyHelper is a set of utilities that you can **install and forget and it will 
 Whether you are in AGH or CC or KBH, or your proxy is ```172.16.12.2``` or ```172.16.20.2``` or ```anything else```, all of the work is done in background and proxy is set for you as soon as you connect to the network, magically (and automatically).
 Another cool thing about ProxyHelper is that it always sets the *Fastest* proxy for you. This is especially relevant if you use networks in CC or EED and you don't know which proxy will be faster -```172.16.24.2``` or ```172.16.24.3```; leave it to ProxyHelper to test both proxies and set the faster proxy automatically.
   
-Also, did I mention with ProxyHelper you can use internet with *tor* even after 2 A.M limit?(potentially to the next day!).   
-Yes ProxyHelper can do it and has many more intereting feature which are discussed below. (see *More Features*)  
-   
+Also, ProxyHelper keeps your tor alive! No more **Tor has been disconnected messages**. For details see *torpinger* file in the repository.
    
    
 **Currently in Alpha, feel free to test it and report issues and bugs here. However, it is not tested for various platforms (except Kubuntu), so if you don't know how to fix a broken linux, don't install, wait for it to become stable.**  
