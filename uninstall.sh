@@ -7,6 +7,7 @@ then
     exit
 fi
 
+sudo /etc/network/if-up.d/zetproxy None
 rm /etc/network/if-up.d/surely_parallel.py
 rm /etc/network/if-up.d/torpinger
 rm /etc/network/if-up.d/zetproxy
