@@ -70,4 +70,4 @@ proxy_env
 proxy_apt
 
 # Remove the line below to stop auto-update feature
-source auto-update.sh
+sudo ~/.proxyhelper/auto-update.sh

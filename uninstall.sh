@@ -7,10 +7,11 @@ then
     exit
 fi
 
-sudo /etc/network/if-up.d/zetproxy None
-rm /etc/network/if-up.d/surely_parallel.py
+zetproxy None
 rm /etc/network/if-up.d/torpinger
 rm /etc/network/if-up.d/zetproxy
+rm /usr/bin/torpinger
+rm /usr/bin/zetproxy
 
 
 echo Uninstallation complete

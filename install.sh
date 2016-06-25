@@ -20,10 +20,11 @@ chmod +x ./torpinger
 chmod +x ./auto-update.sh
 chmod +x ./uninstall.sh
 
-ln -s zetproxy /usr/bin/
-ln -s zetproxy /etc/network/if-up.d/
-ln -s torpinger /usr/bin/
-ln -s torpinger /etc/network/if-up.d/
+# symlinks fail if the path is not absolute
+ln -s ~/.proxyhelper/zetproxy /usr/bin/
+ln -s ~/.proxyhelper/zetproxy /etc/network/if-up.d/
+ln -s ~/.proxyhelper/torpinger /usr/bin/
+ln -s ~/.proxyhelper/torpinger /etc/network/if-up.d/
 echo Created symlinks to /usr/bin/ for zetproxy and torpinger
 
 echo Installation complete
