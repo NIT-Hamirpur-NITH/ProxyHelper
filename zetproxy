@@ -53,7 +53,7 @@ proxy_apt()
 
 if [[ ! $1 = "None" ]]
 then
-    PROXY_OP=$(python3 /etc/network/if-up.d/surely_parallel.py | tail -1)
+    PROXY_OP=$(python3 ~/.proxyhelper/surely_parallel.py | tail -1)
     echo THE OP IS $PROXY_OP
     key=$(echo $PROXY_OP | sed 's/Proxy : .*/Proxy/')
     echo THE KEY IS $key 
@@ -68,3 +68,6 @@ else
 fi
 proxy_env
 proxy_apt
+
+# Remove the line below to stop auto-update feature
+source auto-update.sh

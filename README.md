@@ -38,10 +38,10 @@ The below are required only if you want to use **tor** related utilities:-
 ===
 
 ###Installation  
-1. Clone the repository to your machine  
-```git clone https://github.com/Nithmr/ProxyHelper```
-2. Move to the directory  
-```cd ProxyHelper```
+1. Clone the repository to your machine home directory with the below command 
+```git clone https://github.com/Nithmr/ProxyHelper ~/.proxyhelper```
+2. Move to the directory "~/.proxyhelper" by 
+```cd ~/.proxyhelper```
 3. Make the installer script executable  
 ```chmod +x install.sh```  
 4. Run the installer script  
