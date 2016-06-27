@@ -38,10 +38,10 @@ The below are required only if you want to use **tor** related utilities:-
 ===
 
 ###Installation  
-1. Clone the repository to your machine  
-```git clone https://github.com/Nithmr/ProxyHelper```
-2. Move to the directory  
-```cd ProxyHelper```
+1. Clone the repository to your machine home directory with the below command   
+```git clone https://github.com/Nithmr/ProxyHelper ~/.proxyhelper```
+2. Move to the directory "~/.proxyhelper" by   
+```cd ~/.proxyhelper```
 3. Make the installer script executable  
 ```chmod +x install.sh```  
 4. Run the installer script  
@@ -51,11 +51,17 @@ The below are required only if you want to use **tor** related utilities:-
 
 
 ###How to know if ProxyHelper is working?   
+
+You may need to restart you terminal for this. Also, reconnect your interent connection to see ProxyHelper perform it's auto-proxy-set feature.    
   
-1. Check the content of /tmp/torpingtest in interval of some time, if some lines are being added to the file automatically, then voila! your torpinging is working perfectly fine  
-```cat /tmp/torpingtest```
-2. Check the content of your /etc/environment file, the best proxy for your network should be automatically set there.  
-```cat /etc/environment```
+1. You should be able to execute torpinger and zetproxy as a command in the shell. Type :-    
+```zetproxy ```  
+or      
+```torpinger ```
+3. Check the content of /tmp/torpingtest in interval of some time, if some lines are being added to the file automatically, then voila! your torpinging is working perfectly fine    
+```cat /tmp/torpingtest ```
+4. Check the content of your /etc/environment file, the best proxy for your network should be automatically set there.    
+```cat /etc/environment ```
 
 ===
 
@@ -63,6 +69,7 @@ The below are required only if you want to use **tor** related utilities:-
 ###Uninstallation
   
 1. Go to the directory where you cloned ProxyHelper  
+```cd ~/.proxyhelper```
 2. Run the uninstallation script  
 ```sudo ./uninstall.sh```
    

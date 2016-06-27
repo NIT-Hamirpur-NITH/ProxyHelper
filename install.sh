@@ -7,13 +7,24 @@ then
 	exit
 fi
 
-# parallel pinger and setter
+if [ ! $(pwd | sed 's/\/.*\/.*\///') = '.proxyhelper' ]
+then
+    echo You are not in ~/.proxyhelper directory, you are doing it wrong
+    echo See steps on github.com again
+    exit
+fi
+
+
 chmod +x ./zetproxy
 chmod +x ./torpinger
-cp ./zetproxy /etc/network/if-up.d
-cp ./surely_parallel.py /etc/network/if-up.d
-cp ./torpinger /etc/network/if-up.d/
+chmod +x ./auto-update.sh
+chmod +x ./uninstall.sh
 
-# chmod +x ./zettor
-# cp ./zettor /etc/network/if-up.d/
+# symlinks fail if the path is not absolute
+ln -s ~/.proxyhelper/zetproxy /usr/bin/
+ln -s ~/.proxyhelper/zetproxy /etc/network/if-up.d/
+ln -s ~/.proxyhelper/torpinger /usr/bin/
+ln -s ~/.proxyhelper/torpinger /etc/network/if-up.d/
+echo Created symlinks to /usr/bin/ for zetproxy and torpinger
+
 echo Installation complete
