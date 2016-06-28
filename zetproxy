@@ -12,6 +12,10 @@ hp=http_proxy
 hsp=https_proxy
 fp=ftp_proxy
 np=no_proxy
+HP=HTTP_PROXY
+HSP=HTTPS_PROXY
+FP=FTP_PROXY
+NP=NO_PROXY 
 
 
 # function to set proxy in enviroment file
@@ -20,16 +24,18 @@ proxy_env()
 	echo "SETTING ENV PROXY"
 	# if None proxy then this next line is enough
 	# pipe is in extended regular expr, reqs -r to enable it in GNU sed
-	sed -r "/($hp|$hsp|$fp|$np).*/d" /etc/environment >> ./.temp_file_env;
+    # Doubt: Are capital proxies needed/recommended. Don't know yet ??
+	sed -r "/($hp|$HP|$hsp|$HSP|$fp|$FP|$np|$NP).*/d" /etc/environment > ./.temp_file_env;
 	if [ ! $WIFI_PROXY = "None" ]
 	then 
-
-		HTP=http://$WIFI_PROXY/
-		HTPS=https://$WIFI_PROXY/
-		FP=ftp://$WIFI_PROXY/
-		printf "$hp=\"$HTP\"\n$hsp=\"$HTPS\"\n$fp=\"$FP\"\n$np=\"localhost,127.0.0.1\"\n"  >> ./.temp_file_env;
+		hp_pr=http://$WIFI_PROXY/
+		hsp_pr=https://$WIFI_PROXY/
+		fp_pr=ftp://$WIFI_PROXY/
+        np_pr="localhost,127.0.0.1"
+		printf "$hp=\"$hp_pr\"\n$hsp=\"$hsp_pr\"\n$fp=\"$fp_pr\"\n$np=\"$np_pr\"\n"  >> ./.temp_file_env;
+		printf "$HP=\"$hp_pr\"\n$HSP=\"$hsp_pr\"\n$FP=\"$fp_pr\"\n$NP=\"$np_pr\"\n"  >> ./.temp_file_env;
 	fi
-	mv ./.temp_file_env /etc/environment
+    mv ./.temp_file_env /etc/environment
 }
 	
 # setting proxy for apt in file apt.conf
@@ -42,9 +48,9 @@ proxy_apt()
 	if [ $WIFI_PROXY = "None" ]
 	then 
 		echo clearing 95proxies file 
-		printf "Acquire::http::Proxy \"false\";" >> ./.temp_file_apt;
-	else
-
+        #printf "Acquire::http::Proxy \"false\";" >> ./.temp_file_apt;
+        printf "" > ./.temp_file_apt; 
+    else 
 		printf "Acquire::http::Proxy \"$HTP\";\nAcquire::https::Proxy \"$HTPS\";\nAcquire::ftp::Proxy \"$FP\";\n" >> ./.temp_file_apt;
 		echo creating apt.conf file	
 	fi
