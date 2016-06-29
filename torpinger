@@ -72,8 +72,8 @@ class TorPinger(object):
             # print(resp.read().decode()[0:4])
             print(resp.read())
             resp.close()
-        except OSError:
-            print('Time out')
+        except OSError as e:
+            print('Time out',e)
 
     def which_socks(self):
         op = subprocess.check_output('netstat -lnt',shell=True).decode()

@@ -48,8 +48,7 @@ proxy_apt()
 	if [ $WIFI_PROXY = "None" ]
 	then 
 		echo clearing 95proxies file 
-        #printf "Acquire::http::Proxy \"false\";" >> ./.temp_file_apt;
-        printf "" > ./.temp_file_apt; 
+        printf "Acquire::http::Proxy \"false\";" > ./.temp_file_apt;
     else 
 		printf "Acquire::http::Proxy \"$hp_pr\";\nAcquire::https::Proxy \"$hsp_pr\";\nAcquire::ftp::Proxy \"$fp_pr\";\n" > ./.temp_file_apt;
 		echo Created apt.conf file	
@@ -72,8 +71,13 @@ then
 else
     WIFI_PROXY=None
 fi
+
 proxy_env
 proxy_apt
 
-# Remove the line below to stop auto-update feature
-sudo ~/.proxyhelper/auto-update.sh
+# We don't want to update when we are uninstalling or just resetting proxy
+if [[ ! $1 = "None" ]]
+then
+    # Remove the line below to stop auto-update feature
+    sudo ~/.proxyhelper/auto-update.sh
+fi

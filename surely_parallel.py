@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
-proxies = ['172.16.24.2',
+# bing.com is only here for testing purpose, have to remove it
+proxies = ['bing.com','172.16.24.2',
            '172.16.24.3','172.16.24.4','172.16.12.2','172.16.12.3',
            '172.16.20.2']
 
