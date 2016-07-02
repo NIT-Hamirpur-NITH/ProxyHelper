@@ -91,13 +91,24 @@ proxy_gnome()
 proxy_kde()
 {
     # SOCKS not working yet
+    echo Setting kde proxy
     kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key ProxyType 1
-    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key ftpProxy $fp_pr
-    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key httpsProxy $hsp_pr
-    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key httpProxy $hp_pr
-    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key fttpProxy $fp_pr
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key ftpProxy ''
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key httpsProxy ''
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key httpProxy ''
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key fttpProxy ''
     kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key socksProxy ''
     kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key ReversedException false
+    if [[ $1 = "Socks" ]]
+    then 
+        kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key socksProxy socks://$WIFI_PROXY:$PORT
+    elif [[ $WIFI_PROXY != "None" ]]
+    then
+        kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key ftpProxy $fp_pr
+        kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key httpsProxy $hsp_pr
+        kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key httpProxy $hp_pr
+        kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key fttpProxy $fp_pr
+    fi
 }
 
 if [[ $1 = "None" ]]
@@ -132,5 +143,6 @@ proxy_kde
 if [[  $1 != "None" && $1 != "Socks" ]]
 then
     # Remove the line below to stop auto-update feature
+    echo 'Updating ProxyHelper'
     sudo ~/.proxyhelper/auto-update.sh
 fi
