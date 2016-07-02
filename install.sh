@@ -9,8 +9,7 @@ fi
 
 if [ ! $(pwd | sed 's/\/.*\/.*\///') = '.proxyhelper' ]
 then
-    echo You are not in ~/.proxyhelper directory, you are doing it wrong
-    echo See steps on github.com again
+    echo Exiting. This script should be run from "~/.proxyhelper" directory
     exit
 fi
 
