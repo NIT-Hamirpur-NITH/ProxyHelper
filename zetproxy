@@ -90,8 +90,14 @@ proxy_gnome()
 # proxy for kde 5.5
 proxy_kde()
 {
-    # not working yet
-    echo 'kde is not yet supported'
+    # SOCKS not working yet
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key ProxyType 1
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key ftpProxy $fp_pr
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key httpsProxy $hsp_pr
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key httpProxy $hp_pr
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key fttpProxy $fp_pr
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key socksProxy ''
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key ReversedException false
 }
 
 if [[ $1 = "None" ]]
@@ -120,6 +126,7 @@ fi
 proxy_env
 proxy_apt
 proxy_gnome
+proxy_kde
 
 # We don't want to update when we are uninstalling or just resetting proxy
 if [[  $1 != "None" && $1 != "Socks" ]]
