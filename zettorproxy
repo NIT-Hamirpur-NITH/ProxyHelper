@@ -1,0 +1,21 @@
+#!/bin/bash
+
+
+# exit if not root
+if [ ! $(id -u) -eq 0 ]
+then
+	echo 'This script should be run with root permission'
+	exit
+fi
+
+SOCKS=$(torpinger -tw | tail -1)
+key=$(echo $SOCKS | sed 's/Port: .*/Port/')
+if [[ $key = "Port" ]]
+then
+    PORT=$(echo $SOCKS | sed 's/Port: \(.*\)/\1/')
+    echo The port is $PORT 
+    zetproxy Socks $PORT
+else
+    echo No tor, no point, exitting
+fi
+

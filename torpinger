@@ -2,9 +2,10 @@
 # Python 3 required !!
 # do 'pip3 install pysocks' for socks module
 
-import sys
+import argparse
 import socket
 import subprocess
+import sys
 import time
 try:
     import socks
@@ -60,7 +61,7 @@ class TorPinger(object):
 
     def ping_socket(self,url):
         ## below is only for testing
-        with open('/tmp/torpingtest','a') as f:
+        with open('/var/tmp/torpingtest','a') as f:
             f.write(url)
         ## function to send GET to url
         ## !Important 
@@ -72,8 +73,8 @@ class TorPinger(object):
             # print(resp.read().decode()[0:4])
             print(resp.read())
             resp.close()
-        except OSError:
-            print('Time out')
+        except OSError as e:
+            print('Time out',e)
 
     def which_socks(self):
         op = subprocess.check_output('netstat -lnt',shell=True).decode()
@@ -88,7 +89,7 @@ class TorPinger(object):
         print(SOCKS)
         return SOCKS
     
-    def main_loop(self):
+    def get_sock(self):
         initT = time.time()
         while time.time()-initT < self.timeout_for_socks:
             SOCKS=self.which_socks()
@@ -97,29 +98,50 @@ class TorPinger(object):
         if len(SOCKS) == 0:
             print('Sorry dude couldn\'t find any active tor connection in the\
                     given time, exitting')
-            sys.exit(4)
+            return 
         ## Else we are good to go and have a list of open tor sockets
         ## Of which we choose the one with highest priority
         self.SOCK_REAL = max(SOCKS, key=lambda x: self.sockets[x])
-        ## Only req for testing purpose
-        ## You can open the below file side by side
-        ## to see automatic operation in action
-        # f = open('/tmp/tortester','a')
-        # f.write(time.ctime())
-        # f.write(' PORT: '+str(self.SOCK_REAL)+'\n')
-        # f.close()
 
-        print('highest priority socks',self.SOCK_REAL)
+
+    def run_forever(self):
+        self.get_sock()
+        if self.SOCK_REAL==None:
+            sys.exit(3);
         ## Now we have the socket, so we
         ## set the socket
         self.set_socket(self.SOCK_REAL)
         ## and ping the socket
 
         while True:
-            self.ping_socket(self.ping_url)
-            time.sleep(self.interval)
+            try:
+                self.ping_socket(self.ping_url)
+                time.sleep(self.interval)
+            except KeyboardInterrupt:
+                print('\n\nCancelled run forever operation')
+                sys.exit(5)
+
 
 if __name__=='__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-r','--run_forever',action='store_true', 
+                        help='This is will make script run indefinitely.'+\
+                         'It is the default behaviour.');
+    parser.add_argument('-w','--which_socks',help='Tells which tor socket is open',
+                        action='store_true');
+    parser.add_argument('-t','--terse',help='Sets output to be terse',\
+                        action='store_true');
+    arg = parser.parse_args()
+
     tpinger = TorPinger()
-    # tpinger.main_loop()
-    tpinger.main_loop()
+    if arg.run_forever:
+        tpinger.run_forever()
+    elif arg.which_socks:
+        tpinger.get_sock()
+        if arg.terse:
+            print('Port: {}'.format(tpinger.SOCK_REAL))
+        else:
+            print('highest priority socks port is ',tpinger.SOCK_REAL)
+    else:
+        tpinger.run_forever()
+    

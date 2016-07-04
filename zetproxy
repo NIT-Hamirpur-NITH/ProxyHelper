@@ -12,6 +12,12 @@ hp=http_proxy
 hsp=https_proxy
 fp=ftp_proxy
 np=no_proxy
+sp=socks_proxy
+HP=HTTP_PROXY
+HSP=HTTPS_PROXY
+FP=FTP_PROXY
+NP=NO_PROXY 
+SP=SOCKS_PROXY
 
 
 # function to set proxy in enviroment file
@@ -20,16 +26,19 @@ proxy_env()
 	echo "SETTING ENV PROXY"
 	# if None proxy then this next line is enough
 	# pipe is in extended regular expr, reqs -r to enable it in GNU sed
-	sed -r "/($hp|$hsp|$fp|$np).*/d" /etc/environment >> ./.temp_file_env;
+    # Doubt: Are capital proxies needed/recommended. Don't know yet ??
+    # Doubt: Socks proxy are not set rn, just removed if it exists
+	sed -r "/($hp|$HP|$hsp|$HSP|$fp|$FP|$np|$NP|$sp|$SP).*/d" /etc/environment > ./.temp_file_env;
 	if [ ! $WIFI_PROXY = "None" ]
 	then 
-
-		HTP=http://$WIFI_PROXY/
-		HTPS=https://$WIFI_PROXY/
-		FP=ftp://$WIFI_PROXY/
-		printf "$hp=\"$HTP\"\n$hsp=\"$HTPS\"\n$fp=\"$FP\"\n$np=\"localhost,127.0.0.1\"\n"  >> ./.temp_file_env;
+		hp_pr=http://$WIFI_PROXY:$PORT/
+		hsp_pr=https://$WIFI_PROXY:$PORT/
+		fp_pr=ftp://$WIFI_PROXY:$PORT/
+        np_pr="localhost,127.0.0.1"
+		printf "$hp=\"$hp_pr\"\n$hsp=\"$hsp_pr\"\n$fp=\"$fp_pr\"\n$np=\"$np_pr\"\n"  >> ./.temp_file_env;
+		printf "$HP=\"$hp_pr\"\n$HSP=\"$hsp_pr\"\n$FP=\"$fp_pr\"\n$NP=\"$np_pr\"\n"  >> ./.temp_file_env;
 	fi
-	mv ./.temp_file_env /etc/environment
+    mv ./.temp_file_env /etc/environment
 }
 	
 # setting proxy for apt in file apt.conf
@@ -37,22 +46,81 @@ proxy_apt()
 {
 	echo "SETTING PROXY FOR APT, MAYBE NOT REQD FOR UBUNTU\nNECESSARY FOR KUBUNTU,XUBUNTU,LINUX MINT"
 	
-	# rm /etc/apt/apt.conf
-
 	if [ $WIFI_PROXY = "None" ]
 	then 
 		echo clearing 95proxies file 
-		printf "Acquire::http::Proxy \"false\";" >> ./.temp_file_apt;
-	else
-
-		printf "Acquire::http::Proxy \"$HTP\";\nAcquire::https::Proxy \"$HTPS\";\nAcquire::ftp::Proxy \"$FP\";\n" >> ./.temp_file_apt;
-		echo creating apt.conf file	
+        printf "Acquire::http::Proxy \"false\";" > ./.temp_file_apt;
+    else 
+		printf "Acquire::http::Proxy \"$hp_pr\";\nAcquire::https::Proxy \"$hsp_pr\";\nAcquire::ftp::Proxy \"$fp_pr\";\n" > ./.temp_file_apt;
+		echo Created apt.conf file	
 	fi
 	mv ./.temp_file_apt /etc/apt/apt.conf
 }
 
-if [[ ! $1 = "None" ]]
+# proxy for gsetting 
+# need thorough testing
+proxy_gnome()
+{
+    gsettings set org.gnome.system.proxy.http host ''
+    gsettings set org.gnome.system.proxy.http port  
+    gsettings set org.gnome.system.proxy.https host ''
+    gsettings set org.gnome.system.proxy.https port  
+    gsettings set org.gnome.system.proxy.ftp host ''
+    gsettings set org.gnome.system.proxy.ftp port  
+    gsettings set org.gnome.system.proxy.socks host '' 
+    gsettings set org.gnome.system.proxy.socks port   
+    gsettings set org.gnome.system.proxy mode 'manual' 
+    if [[ $1 = "Socks" ]]
+    then
+        gsetting set org.gnome.system.proxy.socks host $WIFI_PROXY
+        gsetting set org.gnome.system.proxy.socks port $PORT
+    elif [[ $WIFI_PROXY != "None" ]]
+    then
+        gsettings set org.gnome.system.proxy.http host $WIFI_PROXY
+        gsettings set org.gnome.system.proxy.http port $PORT
+        gsettings set org.gnome.system.proxy.https host $WIFI_PROXY
+        gsettings set org.gnome.system.proxy.https port $PORT
+        gsettings set org.gnome.system.proxy.ftp host $WIFI_PROXY
+        gsettings set org.gnome.system.proxy.ftp port $PORT
+        gsettings set org.gnome.system.proxy.socks host $WIFI_PROXY 
+        gsettings set org.gnome.system.proxy.socks port $PORT 
+        gsettings set org.gnome.system.proxy mode 'manual' 
+    fi
+}
+# proxy for kde 5.5
+proxy_kde()
+{
+    # SOCKS not working yet
+    echo Setting kde proxy
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key ProxyType 1
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key ftpProxy ''
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key httpsProxy ''
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key httpProxy ''
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key fttpProxy ''
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key socksProxy ''
+    kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key ReversedException false
+    if [[ $1 = "Socks" ]]
+    then 
+        kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key socksProxy socks://$WIFI_PROXY:$PORT
+    elif [[ $WIFI_PROXY != "None" ]]
+    then
+        kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key ftpProxy $fp_pr
+        kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key httpsProxy $hsp_pr
+        kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key httpProxy $hp_pr
+        kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key fttpProxy $fp_pr
+    fi
+}
+
+if [[ $1 = "None" ]]
 then
+    echo 'Clearing proxy'
+    WIFI_PROXY=None
+elif [[ $1 = "Socks" ]]
+then
+    echo 'Setting socks proxy'
+    PORT=$2
+    WIFI_PROXY='127.0.0.1'
+else
     PROXY_OP=$(python3 ~/.proxyhelper/surely_parallel.py | tail -1)
     echo THE OP IS $PROXY_OP
     key=$(echo $PROXY_OP | sed 's/Proxy : .*/Proxy/')
@@ -60,14 +128,21 @@ then
     if [[ $key = 'Proxy' ]]
     then
         WIFI_PROXY=$(echo $PROXY_OP | sed 's/Proxy : \(.*\)/\1/')
+        PORT=3128
     else
         WIFI_PROXY=None 
     fi
-else
-    WIFI_PROXY=None
 fi
+
 proxy_env
 proxy_apt
+proxy_gnome
+proxy_kde
 
-# Remove the line below to stop auto-update feature
-sudo ~/.proxyhelper/auto-update.sh
+# We don't want to update when we are uninstalling or just resetting proxy
+if [[  $1 != "None" && $1 != "Socks" ]]
+then
+    # Remove the line below to stop auto-update feature
+    echo 'Updating ProxyHelper'
+    sudo ~/.proxyhelper/auto-update.sh
+fi

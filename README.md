@@ -58,8 +58,8 @@ You may need to restart you terminal for this. Also, reconnect your interent con
 ```zetproxy ```  
 or      
 ```torpinger ```
-3. Check the content of /tmp/torpingtest in interval of some time, if some lines are being added to the file automatically, then voila! your torpinging is working perfectly fine    
-```cat /tmp/torpingtest ```
+3. Check the content of /var/tmp/torpingtest in interval of some time, if some lines are being added to the file automatically, then voila! your torpinging is working perfectly fine    
+```cat /var/tmp/torpingtest ```
 4. Check the content of your /etc/environment file, the best proxy for your network should be automatically set there.    
 ```cat /etc/environment ```
 
