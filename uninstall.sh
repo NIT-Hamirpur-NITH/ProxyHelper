@@ -7,11 +7,9 @@ then
     exit
 fi
 
-zetproxy None
 rm /etc/network/if-up.d/torpinger
 rm /etc/network/if-up.d/zetproxy
-rm /usr/bin/torpinger
-rm /usr/bin/zetproxy
+rm /usr/bin/phelp
 
 
 echo Uninstallation complete

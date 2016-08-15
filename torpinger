@@ -37,7 +37,7 @@ class TorPinger(object):
         self.ping_url = 'http://www.msftncsi.com/ncsi.txt'
         ## time between two pings
         ## should be 30seconds ??
-        self.interval = 1
+        self.interval = 30
         ## timeout for one ping
         ## should be 5 seconds ??
         self.timeout = 10

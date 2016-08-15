@@ -1,12 +1,5 @@
 #!/bin/bash
 
-# exit if not root
-if [ ! $(id -u) -eq 0 ]
-then
-	echo 'This script should be run with root permission'
-	exit
-fi
-
 # variables for protocols
 hp=http_proxy
 hsp=https_proxy
@@ -21,59 +14,77 @@ SP=SOCKS_PROXY
 
 
 # function to set proxy in enviroment file
-proxy_env()
+proxy_shell()
 {
-	echo "SETTING ENV PROXY"
+    echo '## Setting environment variables in' ${1}
 	# if None proxy then this next line is enough
 	# pipe is in extended regular expr, reqs -r to enable it in GNU sed
     # Doubt: Are capital proxies needed/recommended. Don't know yet ??
     # Doubt: Socks proxy are not set rn, just removed if it exists
-	sed -r "/($hp|$HP|$hsp|$HSP|$fp|$FP|$np|$NP|$sp|$SP).*/d" /etc/environment > ./.temp_file_env;
-	if [ ! $WIFI_PROXY = "None" ]
+	sed -r "/($hp|$HP|$hsp|$HSP|$fp|$FP|$np|$NP|$sp|$SP).*/d" $HOME/.${1}rc> ./.temp_file_env;
+    unset $hp
+    unset $hsp
+    unset $fp
+    unset $np
+    unset $sp
+    unset $HP
+    unset $HSP
+    unset $FP
+    unset $NP
+    unset $SP
+    if [ $WIFI_PROXY = "None" ]
+    then 
+        hp_pr=
+        hsp_pr=
+        fp_pr=
+        np_pr=
+	elif [ ! $WIFI_PROXY = "None" ]
 	then 
 		hp_pr=http://$WIFI_PROXY:$PORT/
 		hsp_pr=https://$WIFI_PROXY:$PORT/
 		fp_pr=ftp://$WIFI_PROXY:$PORT/
         np_pr="localhost,127.0.0.1"
-		printf "$hp=\"$hp_pr\"\n$hsp=\"$hsp_pr\"\n$fp=\"$fp_pr\"\n$np=\"$np_pr\"\n"  >> ./.temp_file_env;
-		printf "$HP=\"$hp_pr\"\n$HSP=\"$hsp_pr\"\n$FP=\"$fp_pr\"\n$NP=\"$np_pr\"\n"  >> ./.temp_file_env;
-	fi
-    mv ./.temp_file_env /etc/environment
+    fi
+    printf "export $hp=\"$hp_pr\"\nexport $hsp=\"$hsp_pr\"\nexport $fp=\"$fp_pr\"\nexport $np=\"$np_pr\"\n"  >> ./.temp_file_env;
+    printf "export $HP=\"$hp_pr\"\nexport $HSP=\"$hsp_pr\"\nexport $FP=\"$fp_pr\"\nexport $NP=\"$np_pr\"\n"  >> ./.temp_file_env;
+    mv ./.temp_file_env $HOME/.${1}rc
+    echo '  -> Proxy set in' ${1}
 }
 	
 # setting proxy for apt in file apt.conf
 proxy_apt()
 {
-	echo "SETTING PROXY FOR APT, MAYBE NOT REQD FOR UBUNTU\nNECESSARY FOR KUBUNTU,XUBUNTU,LINUX MINT"
-	
+	echo '## Setting proxy for apt'
 	if [ $WIFI_PROXY = "None" ]
 	then 
-		echo clearing 95proxies file 
+		echo '  -> Clearing apt proxy everywhere ...'
         printf "Acquire::http::Proxy \"false\";" > ./.temp_file_apt;
     else 
 		printf "Acquire::http::Proxy \"$hp_pr\";\nAcquire::https::Proxy \"$hsp_pr\";\nAcquire::ftp::Proxy \"$fp_pr\";\n" > ./.temp_file_apt;
-		echo Created apt.conf file	
+		#echo Created apt.conf file	
+        echo '  -> Proxy set in apt'
 	fi
-	mv ./.temp_file_apt /etc/apt/apt.conf
+	sudo mv ./.temp_file_apt /etc/apt/apt.conf
 }
 
 # proxy for gsetting 
 # need thorough testing
 proxy_gnome()
 {
+    echo '## Handling gnome proxy'
     gsettings set org.gnome.system.proxy.http host ''
-    gsettings set org.gnome.system.proxy.http port  
+    gsettings set org.gnome.system.proxy.http port 0
     gsettings set org.gnome.system.proxy.https host ''
-    gsettings set org.gnome.system.proxy.https port  
+    gsettings set org.gnome.system.proxy.https port 0 
     gsettings set org.gnome.system.proxy.ftp host ''
-    gsettings set org.gnome.system.proxy.ftp port  
+    gsettings set org.gnome.system.proxy.ftp port 0
     gsettings set org.gnome.system.proxy.socks host '' 
-    gsettings set org.gnome.system.proxy.socks port   
+    gsettings set org.gnome.system.proxy.socks port 0   
     gsettings set org.gnome.system.proxy mode 'manual' 
     if [[ $1 = "Socks" ]]
     then
-        gsetting set org.gnome.system.proxy.socks host $WIFI_PROXY
-        gsetting set org.gnome.system.proxy.socks port $PORT
+        gsettings set org.gnome.system.proxy.socks host $WIFI_PROXY
+        gsettings set org.gnome.system.proxy.socks port $PORT
     elif [[ $WIFI_PROXY != "None" ]]
     then
         gsettings set org.gnome.system.proxy.http host $WIFI_PROXY
@@ -86,12 +97,28 @@ proxy_gnome()
         gsettings set org.gnome.system.proxy.socks port $PORT 
         gsettings set org.gnome.system.proxy mode 'manual' 
     fi
+    echo '  -> Setting proxy in gnome'
 }
+# proxy for git
+proxy_git()
+{ echo '## Setting git proxy'
+
+    if [[ $WIFI_PROXY = "None" ]]
+    then
+        git config --global http.proxy ''
+        git config --global https.proxy ''
+    else
+        git config --global http.proxy $WIFI_PROXY:$PORT
+        git config --global https.proxy $WIFI_PROXY:$PORT
+    fi
+    echo '  -> Proxy set in git'
+}
+
 # proxy for kde 5.5
 proxy_kde()
 {
     # SOCKS not working yet
-    echo Setting kde proxy
+    echo '## Setting kde proxy'
     kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key ProxyType 1
     kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key ftpProxy ''
     kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key httpsProxy ''
@@ -109,40 +136,83 @@ proxy_kde()
         kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key httpProxy $hp_pr
         kwriteconfig5 --file ~/.config/kioslaverc --group Proxy\ Settings --key fttpProxy $fp_pr
     fi
+    echo '  -> Proxy set in kde proxy module'
 }
 
 if [[ $1 = "None" ]]
 then
+    echo '-------------------------------'
     echo 'Clearing proxy'
+    echo '-------------------------------'
     WIFI_PROXY=None
 elif [[ $1 = "Socks" ]]
 then
-    echo 'Setting socks proxy'
+    echo '-------------------------------'
+    echo 'Setting tor socks proxy'
+    echo '-------------------------------'
     PORT=$2
     WIFI_PROXY='127.0.0.1'
+elif [[ $1 = "Proxy" ]]
+then 
+    TEMP=$2
+    WIFI_PROXY=$(echo $TEMP | sed 's/\(.*\):.*/\1/')
+    PORT=$(echo $TEMP | sed 's/.*:\(.*\)/\1/')
 else
-    PROXY_OP=$(python3 ~/.proxyhelper/surely_parallel.py | tail -1)
-    echo THE OP IS $PROXY_OP
-    key=$(echo $PROXY_OP | sed 's/Proxy : .*/Proxy/')
-    echo THE KEY IS $key 
-    if [[ $key = 'Proxy' ]]
+    echo '----------------------------------'
+    echo 'Setting proxy automatically ...'    
+    echo '----------------------------------'
+    echo ''
+    echo '## Evaluating fastest proxy'
+    PROXY_OP=$(python3 $HOME/.proxyhelper/surely_parallel.py | tail -1)
+    echo ' '  $PROXY_OP
+    phrase='-> Best proxy'
+    key=$(echo $PROXY_OP | sed 's/-> Best proxy : .*/phrase/')
+    #echo THE KEY IS $key 
+    if [[ $key = phrase ]]
     then
-        WIFI_PROXY=$(echo $PROXY_OP | sed 's/Proxy : \(.*\)/\1/')
+        WIFI_PROXY=$(echo $PROXY_OP | sed 's/-> Best proxy : \(.*\)/\1/')
         PORT=3128
     else
         WIFI_PROXY=None 
     fi
 fi
 
-proxy_env
-proxy_apt
-proxy_gnome
-proxy_kde
+# Function call to set environment variables
+proxy_shell bash
+if [ -x "$(command -v zsh)" ]
+then 
+    proxy_shell zsh
+    #zsh ~/.zshrc
+fi
+if [ -x "$(command -v git)" ]
+then 
+    proxy_git
+fi
+if [ -x "$(command -v apt)" ]
+then 
+    proxy_apt
+fi
+# Function call to set gnome proxy
+# Required for firefox
+if [ -x "$(command -v gsettings)" ]
+then 
+    proxy_gnome
+fi
+# Function call to set kde system proxy
+if [ -x "$(command -v kwriteconfig5)" ]
+then 
+    proxy_kde
+fi
 
 # We don't want to update when we are uninstalling or just resetting proxy
-if [[  $1 != "None" && $1 != "Socks" ]]
-then
-    # Remove the line below to stop auto-update feature
-    echo 'Updating ProxyHelper'
-    sudo ~/.proxyhelper/auto-update.sh
-fi
+#if [[  $1 != "Proxy" && $1 != "None" && $1 != "Socks" ]]
+#then
+    ## Remove the line below to stop auto-update feature
+    #sudo ~/.proxyhelper/auto-update.sh
+    #echo '## Updating ProxyHelper'
+#fi
+
+## Better method would be to source the config script 
+## But that doesn't work for unknown reason
+
+# exec $SHELL

@@ -9,4 +9,5 @@ fi
 
 cd ~/.proxyhelper
 git pull origin master
+sh ./install.sh
 
