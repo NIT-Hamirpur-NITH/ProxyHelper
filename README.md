@@ -66,9 +66,9 @@ Allows you to have more control over setting the proxy, using a simple
 command line tool named "phelp". It is installed with the ProxyHelper itself.
 
 To use the manual mode, you need to enable it via:  
-```phelp --manual-mode```
+```phelp --manual```
 To get back to auto mode, type:  
-```phelp --manual-mode```
+```phelp --auto```
   
 Commands:   
   
@@ -86,5 +86,5 @@ Commands:
 
 ###Uninstallation
  
-1. Run the uninstallation script
-```. 
+1. Run the uninstallation script  
+```cd ~/.proxyhelper && sudo sh ./uninstall.sh```

@@ -205,12 +205,12 @@ then
 fi
 
 # We don't want to update when we are uninstalling or just resetting proxy
-#if [[  $1 != "Proxy" && $1 != "None" && $1 != "Socks" ]]
-#then
-    ## Remove the line below to stop auto-update feature
-    #sudo ~/.proxyhelper/auto-update.sh
-    #echo '## Updating ProxyHelper'
-#fi
+if [[  $1 != "Proxy" && $1 != "None" && $1 != "Socks" ]]
+then
+    home=$HOME
+    cd $home/.proxyhelper && git pull origin master && sh ./install.sh
+    echo '## Updating ProxyHelper'
+fi
 
 ## Better method would be to source the config script 
 ## But that doesn't work for unknown reason
