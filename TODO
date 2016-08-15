@@ -1,3 +1,0 @@
-1. source ~/.bashrc from script doesn't work. find a work around. (reqd for phelp)
-2. zettorproxy needs change to use "phelp" instead of directly using "torpinger"
-3. torpinger reqs pysocks, put the pysocks file in repo so no need for pip install

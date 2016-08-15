@@ -32,8 +32,10 @@ Also, ProxyHelper keeps your tor alive! No more **Tor has been disconnected!** m
   
 1. Linux  
 2. python3+  
-3. git 
+3. git   
+  
 `sudo apt-get install git`  
+  
   
 ===  
   
@@ -46,31 +48,42 @@ Also, ProxyHelper keeps your tor alive! No more **Tor has been disconnected!** m
 ###Installation:-  
 
 ```
-git clone https://github.com/clearnote01/phelp.git ~/.proxyhelper && cd ~/.proxyhelper && 
-sudo chmod +x ./phelp-install.sh && ./phelp-install.sh
+git clone https://github.com/Nithmr/ProxyHelper.git ~/.proxyhelper && cd ~/.proxyhelper && 
+sudo chmod +x ./install.sh && ./install.sh
 ```  
-
+  
+Note: You may need to set proxy in git before using this.
+    
 ===  
   
   
 ###Usage:- 
   
+  
+
+==== 
+  
 ####Automatic mode 
+  
 This is the default behaviour. ProxyHelper automatically judges the
 best proxy and sets it for you! You don't have to do anything!!
 
-====
 
 ####Manual mode
-Allows you to have more control over setting the proxy, using a simple
-command line tool named "phelp". It is installed with the ProxyHelper itself.
-
-To use the manual mode, you need to enable it via:  
-```phelp --manual```
-To get back to auto mode, type:  
-```phelp --auto```
   
-Commands:   
+Allows you to have more control over setting the proxy, using a simple
+command line tool named "phelp". 
+  
+To use the manual mode, you need to enable it via:    
+  
+```phelp --manual```
+  
+To get back to auto mode, type:    
+  
+```phelp --auto```  
+  
+  
+**Commands:**   
   
 1. Set best proxy-  
 ```phelp -S```  
@@ -86,5 +99,6 @@ Commands:
 
 ###Uninstallation
  
-1. Run the uninstallation script  
+1. Run the uninstallation script    
+  
 ```cd ~/.proxyhelper && sudo sh ./uninstall.sh```
