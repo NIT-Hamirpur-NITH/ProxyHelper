@@ -1,30 +1,50 @@
 #!/bin/sh
 
-# exit if not root
-if [ ! $(id -u) -eq 0 ]
+# exit if root
+if [ $(id -u) -eq 0 ]
 then
-	echo 'This script should be run with root permission'
+	echo 'Run without sudo!!'
 	exit
 fi
 
+home=$HOME
+
 if [ ! $(pwd | sed 's/\/.*\/.*\///') = '.proxyhelper' ]
 then
-    echo You are not in ~/.proxyhelper directory, you are doing it wrong
-    echo See steps on github.com again
+    echo Exiting. This script should be run from "~/.proxyhelper" directory
     exit
 fi
 
+sudo chmod +x $home/.proxyhelper/zetproxy
+sudo chmod +x $home/.proxyhelper/proxyhelper.py
+sudo chmod +x $home/.proxyhelper/torpinger
+#chmod +x ./auto-update.sh
+sudo chmod +x $home/.proxyhelper/uninstall.sh
 
-chmod +x ./zetproxy
-chmod +x ./torpinger
-chmod +x ./auto-update.sh
-chmod +x ./uninstall.sh
-
+# Remove earlier installations if they exist
+# Needs for people with earlier version of PH
+# Which might clash
+if [ -x "$(command -v phelp)" ]
+then 
+    sudo rm /usr/bin/phelp
+fi
+if [ -x "$(command -v zetproxy)" ]
+    sudo rm /usr/bin/zetproxy
+fi
+if [ -x "$(command -v torpinger)" ]
+then 
+    sudo rm /usr/bin/torpinger
+fi
+if [ -x "$(command -v /etc/network/if-up.d/zetproxy)" ]
+then
+    sudo rm /etc/network/if-up.d/zetproxy
+fi
+if [ -x "$(command -v /etc/network/if-up.d/torpinger)" ]
+then 
+    sudo rm /etc/network/if-up.d/torpinger
+fi
 # symlinks fail if the path is not absolute
-ln -s ~/.proxyhelper/zetproxy /usr/bin/
-ln -s ~/.proxyhelper/zetproxy /etc/network/if-up.d/
-ln -s ~/.proxyhelper/torpinger /usr/bin/
-ln -s ~/.proxyhelper/torpinger /etc/network/if-up.d/
-echo Created symlinks to /usr/bin/ for zetproxy and torpinger
-
+sudo ln -s $home/.proxyhelper/zetproxy /etc/network/if-up.d/
+sudo ln -s $home/.proxyhelper/torpinger /etc/network/if-up.d/
+sudo ln -s $home/.proxyhelper/proxyhelper.py /usr/bin/phelp
 echo Installation complete

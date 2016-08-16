@@ -15,69 +15,90 @@ Also, ProxyHelper keeps your tor alive! No more **Tor has been disconnected!** m
   
 ===
 
-###More Features
+###Supports:-
   
-This section is yet to be written. It will contain an in-depth description of the components of ProxyHelper  
+1. git
+2. web-browsers-firefox,chrome (Set option "Use System Proxy" in preference of browser)
+3. gnome proxy module
+4. kde proxy module
+5. apt                                 
+  
 
 ===
 
 ###Requirements:-
   
-1. **Linux**  -  ProxyHelper doesn't support for windows unfortunately (Yet)  
-2. **Git**  -  You need to have git installed in your system   
-```sudo apt-get install git```  
-3. **Python3**  -  In Ubuntu based distributions since 14.04 it is already installed, otherwise you need to install this by yourself.   
-
-The below are required only if you want to use **tor** related utilities:-
+**Compulsary:-**  
   
-4. **pip-3**  -  Again, this should come already installed with your OS, otherwise follow the step below.  
-```sudo apt-get install python3-pip```
-5. **socks python module**   
-```sudo -H pip3 install pysocks```
-
+1. Linux  
+2. python3+  
+3. git   
+  
+`sudo apt-get install git`  
+  
+  
+===  
+  
+**Optional:-**  
+  
+1. pysocks, pip3 (required only for tor related utilities)  
+  
 ===
+  
+###Installation:-  
 
-###Installation  
-1. Clone the repository to your machine home directory with the below command   
-```git clone https://github.com/Nithmr/ProxyHelper ~/.proxyhelper```
-2. Move to the directory "~/.proxyhelper" by   
-```cd ~/.proxyhelper```
-3. Make the installer script executable  
-```chmod +x install.sh```  
-4. Run the installer script  
-```sudo ./install.sh```
+```
+git clone https://github.com/Nithmr/ProxyHelper.git ~/.proxyhelper && cd ~/.proxyhelper && 
+sudo chmod +x ./install.sh && ./install.sh
+```  
+  
+Note: You may need to set proxy in git before using this.
     
-===
-
-
-###How to know if ProxyHelper is working?   
-
-You may need to restart you terminal for this. Also, reconnect your interent connection to see ProxyHelper perform it's auto-proxy-set feature.    
+===  
   
-1. You should be able to execute torpinger and zetproxy as a command in the shell. Type :-    
-```zetproxy ```  
-or      
-```torpinger ```
-3. Check the content of /var/tmp/torpingtest in interval of some time, if some lines are being added to the file automatically, then voila! your torpinging is working perfectly fine    
-```cat /var/tmp/torpingtest ```
-4. Check the content of your /etc/environment file, the best proxy for your network should be automatically set there.    
-```cat /etc/environment ```
+  
+###Usage:- 
+  
+  
 
-===
+==== 
+  
+####Automatic mode 
+  
+This is the default behaviour. ProxyHelper automatically judges the
+best proxy and sets it for you! You don't have to do anything!!
 
+
+####Manual mode
+  
+Allows you to have more control over setting the proxy, using a simple
+command line tool named "phelp". 
+  
+To use the manual mode, you need to enable it via:    
+  
+```phelp --manual```
+  
+To get back to auto mode, type:    
+  
+```phelp --auto```  
+  
+  
+**Commands:**   
+  
+1. Set best proxy-  
+```phelp -S```  
+2. Evaluate best proxy-  
+```phelp -G```  
+3. Clear all proxy-  
+```phelp -N```  
+4. Set custom proxy-  
+```phelp -C 172.16.24.2:3128``` *(Replace the proxy by what you require* 
+5. Show help-    
+`phelp -h`  
+  
 
 ###Uninstallation
+ 
+1. Run the uninstallation script    
   
-1. Go to the directory where you cloned ProxyHelper  
-```cd ~/.proxyhelper```
-2. Run the uninstallation script  
-```sudo ./uninstall.sh```
-   
-===
-
-###To reset the proxy  
-1. Go to the directory where you cloned ProxyHelper  
-2. Type the line below in the shell  
-```sudo ./zetproxy None```
-
-===
+```cd ~/.proxyhelper && sudo sh ./uninstall.sh```
