@@ -49,7 +49,7 @@ Also, ProxyHelper keeps your tor alive! No more **Tor has been disconnected!** m
 
 ```
 git clone https://github.com/Nithmr/ProxyHelper.git ~/.proxyhelper && cd ~/.proxyhelper && 
-sudo chmod +x ./install.sh && ./install.sh
+chmod +x ./install.sh && ./install.sh
 ```  
   
 Note: You may need to set proxy in git before using this.

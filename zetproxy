@@ -114,6 +114,20 @@ proxy_git()
     echo '  -> Proxy set in git'
 }
 
+#proxy for npm
+proxy_npm()
+{ echo '## Setting npm proxy'
+
+    if [[ $WIFI_PROXY = "None" ]]
+    then
+        npm config delete https-proxy 
+        npm config delete proxy 
+    else
+        npm config set https-proxy "http://$WIFI_PROXY:$PORT/"
+        npm config set proxy "http://$WIFI_PROXY:$PORT/"
+    fi
+    echo '  -> Proxy set in npm'
+}
 # proxy for kde 5.5
 proxy_kde()
 {
@@ -187,6 +201,10 @@ fi
 if [ -x "$(command -v git)" ]
 then 
     proxy_git
+fi
+if [ -x "$(command -v npm)" ]
+then 
+    proxy_npm
 fi
 if [ -x "$(command -v apt)" ]
 then 

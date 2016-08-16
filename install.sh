@@ -15,23 +15,24 @@ then
     exit
 fi
 
-sudo chmod +x $home/.proxyhelper/zetproxy
-sudo chmod +x $home/.proxyhelper/proxyhelper.py
-sudo chmod +x $home/.proxyhelper/torpinger
+chmod +x $home/.proxyhelper/zetproxy
+chmod +x $home/.proxyhelper/proxyhelper.py
+chmod +x $home/.proxyhelper/torpinger
 #chmod +x ./auto-update.sh
-sudo chmod +x $home/.proxyhelper/uninstall.sh
+chmod +x $home/.proxyhelper/uninstall.sh
 
 # Remove earlier installations if they exist
 # Needs for people with earlier version of PH
 # Which might clash
-if [ -x "$(command -v phelp)" ]
+if [ -x "$(command -v /usr/bin/phelp)" ]
 then 
     sudo rm /usr/bin/phelp
 fi
-if [ -x "$(command -v zetproxy)" ]
+if [ -x "$(command -v /usr/bin/zetproxy)" ]
+then
     sudo rm /usr/bin/zetproxy
 fi
-if [ -x "$(command -v torpinger)" ]
+if [ -x "$(command -v /usr/bin/torpinger)" ]
 then 
     sudo rm /usr/bin/torpinger
 fi
