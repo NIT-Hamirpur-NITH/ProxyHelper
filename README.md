@@ -1,6 +1,7 @@
 # ProxyHelper
 
 [![Join the chat at https://gitter.im/Nithmr/ProxyHelper](https://badges.gitter.im/Nithmr/ProxyHelper.svg)](https://gitter.im/Nithmr/ProxyHelper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This repository will contain the code for a **cool** application that would remove the need to use FoxyProxy and likes.
 
 ProxyHelper is a set of utilities that you can **install and forget and it will just work!** It will automate all your proxy and tor configuration needs on linux. Meaning, you won't need to configure proxy for firefox, apt, git, etc manually, ever again.
@@ -18,7 +19,7 @@ Also, ProxyHelper keeps your tor alive! No more **Tor has been disconnected!** m
 ###Supports:-
   
 1. git
-2. web-browsers-firefox,chrome (Set option "Use System Proxy" in preference of browser)
+2. web-browsers: firefox, chrome (Set option "Use System Proxy" in preference of browser)
 3. gnome proxy module
 4. kde proxy module
 5. apt                                 
@@ -92,7 +93,7 @@ To get back to auto mode, type:
 3. Clear all proxy-  
 ```phelp -N```  
 4. Set custom proxy-  
-```phelp -C 172.16.24.2:3128``` *(Replace the proxy by what you require* 
+```phelp -C 172.16.24.2:3128``` *(Replace the proxy by what you require)* 
 5. Show help-    
 `phelp -h`  
   
